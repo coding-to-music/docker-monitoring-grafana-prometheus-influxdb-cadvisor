@@ -1,51 +1,58 @@
-version: '2'
+version: "3.8"
 
 services:
- influxdbData:
-  image: busybox
-  volumes:
-    - ./data/influxdb:/data
+  influxdbData:
+    image: busybox
+    volumes:
+      - ./data/influxdb:/data
 
- influxdb:
-  image: tutum/influxdb:0.9
-  restart: always
-  environment:
-    - PRE_CREATE_DB=cadvisor
-  ports:
-    - "8083:8083"
-    - "8086:8086"
-  expose:
-    - "8090"
-    - "8099"
-  volumes_from:
-    - "influxdbData"
+  influxdb:
+    # image: tutum/influxdb:0.9
+    image: influxdb/influxdb:latest
+    restart: always
+    environment:
+      - PRE_CREATE_DB=cadvisor
+    ports:
+      - "8083:8083"
+      - "8086:8086"
+    expose:
+      - "8090"
+      - "8099"
+    volumes_from:
+      - "influxdbData"
 
- cadvisor:
-  image: google/cadvisor:v0.29.0
-  links:
-    - influxdb:influxsrv
-  command: -storage_driver=influxdb -storage_driver_db=cadvisor -storage_driver_host=influxsrv:8086
-  restart: always
-  ports:
-    - "8080:8080"
-  volumes:
-    - /:/rootfs:ro
-    - /var/run:/var/run:rw
-    - /sys:/sys:ro
-    - /var/lib/docker/:/var/lib/docker:ro
+  cadvisor:
+    # image: google/cadvisor:v0.29.0
+    image: google/cadvisor:latest
+    links:
+      - influxdb:influxsrv
+    command: -storage_driver=influxdb -storage_driver_db=cadvisor -storage_driver_host=influxsrv:8086
+    restart: always
+    ports:
+      - "8080:8080"
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
 
- grafana:
-  image: grafana/grafana:2.6.0
-  restart: always
-  links:
-    - influxdb:influxsrv
-  ports:
-    - "3000:3000"
-  environment:
-    - HTTP_USER=admin
-    - HTTP_PASS=admin
-    - INFLUXDB_HOST=influxsrv
-    - INFLUXDB_PORT=8086
-    - INFLUXDB_NAME=cadvisor
-    - INFLUXDB_USER=root
-    - INFLUXDB_PASS=root
+  grafana:
+    # image: grafana/grafana:2.6.0
+    image: grafana/grafana:latest
+    restart: always
+    links:
+      - influxdb:influxsrv
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_AUTH_ANONYMOUS_ENABLED="true"
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+      - GF_AUTH_BASIC_ENABLED="false"
+      - GF_AUTH_DISABLE_LOGIN_FORM="true"
+      - HTTP_USER=admin
+      - HTTP_PASS=admin
+      - INFLUXDB_HOST=influxsrv
+      - INFLUXDB_PORT=8086
+      - INFLUXDB_NAME=cadvisor
+      - INFLUXDB_USER=root
+      - INFLUXDB_PASS=root

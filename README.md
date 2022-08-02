@@ -8,6 +8,8 @@ From / By Brian Christner https://github.com/vegasbrianc
 
 https://github.com/vegasbrianc/docker-monitoring
 
+https://brianchristner.io/how-to-setup-docker-monitoring/
+
 ## Environment variables:
 
 ```java
@@ -25,6 +27,18 @@ git branch -M main
 git remote add origin git@github.com:coding-to-music/docker-monitoring-grafana-prometheus-influxdb-cadvisor.git
 git push -u origin main
 ```
+
+## Results
+
+cAdvisor http://localhost:8080/containers/
+
+Grafana http://localhost:3000 (there are no Dashboards)
+
+https://brianchristner.io/how-to-setup-docker-monitoring/
+
+Shows views of the 2 available dashboards.
+
+Work item: They could be added automatically via the docker compose
 
 ## Docker Monitoring Grafana JSON Dashboard
 
