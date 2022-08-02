@@ -32,7 +32,7 @@ git push -u origin main
 
 cAdvisor http://localhost:8080/containers/
 
-Grafana http://localhost:3000 (there are no Dashboards)
+Grafana http://localhost:3000 (there are no Dashboards, need to paste them in manually - could add them via docker-compose)
 
 https://brianchristner.io/how-to-setup-docker-monitoring/
 
