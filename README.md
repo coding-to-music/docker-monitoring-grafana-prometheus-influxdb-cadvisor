@@ -32,11 +32,13 @@ git push -u origin main
 
 cAdvisor http://localhost:8080/containers/
 
-Grafana http://localhost:3000 (there are no Dashboards, need to paste them in manually - could add them via docker-compose)
+Grafana http://localhost:3000 (Dashboard yml files (2) - need to paste them in manually - could add them via docker-compose)
 
-https://brianchristner.io/how-to-setup-docker-monitoring/
+https://brianchristner.io/how-to-setup-docker-monitoring/ (2015 article - Shows views of the 2 available dashboards.)
 
-Shows views of the 2 available dashboards.
+json files of the two dashboards are available in the repo
+
+Note they are from a legacy version of Grafana (2? 3?) and now there is a time-series chart-type and so the manual queries are allowed but old.
 
 Work item: They could be added automatically via the docker compose
 
