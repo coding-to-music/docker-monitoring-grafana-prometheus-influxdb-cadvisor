@@ -9,7 +9,7 @@ services:
   influxdb:
     # image: tutum/influxdb:0.9
     image: influxdb/influxdb:latest
-    restart: always
+    restart: unless-stopped
     environment:
       - PRE_CREATE_DB=cadvisor
     ports:
@@ -27,7 +27,7 @@ services:
     links:
       - influxdb:influxsrv
     command: -storage_driver=influxdb -storage_driver_db=cadvisor -storage_driver_host=influxsrv:8086
-    restart: always
+    restart: unless-stopped
     ports:
       - "8080:8080"
     volumes:
@@ -39,7 +39,7 @@ services:
   grafana:
     # image: grafana/grafana:2.6.0
     image: grafana/grafana:latest
-    restart: always
+    restart: unless-stopped
     links:
       - influxdb:influxsrv
     ports:
